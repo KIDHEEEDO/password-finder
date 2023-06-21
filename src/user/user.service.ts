@@ -4,10 +4,10 @@ import { UserModel } from 'SRC/user/entity/user.model';
 import { IntegrateException } from 'EXCEPTION/integrateException';
 import { ErrCode } from 'EXCEPTION/errCode';
 import { ErrMsg } from 'EXCEPTION/errMsg';
-import { hash, compare } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
 import { EnvService } from 'SRC/env/env.service';
 import { Env } from 'SRC/env/dataTypes/types/env.type';
+import { HashUtil } from 'COMMON/utils/hash.util';
 
 @Injectable()
 export class UserService {
@@ -17,7 +17,7 @@ export class UserService {
         const emailUser = await this.userRepository.findOneByFilter({ email });
         if (emailUser) throw new IntegrateException(ErrCode.EMAIL_CONFLICT, ErrMsg.EMAIL_CONFLICT, HttpStatus.CONFLICT);
 
-        const hashedPassword = await hash(password, 10);
+        const hashedPassword = await HashUtil.hashPassword(password);
         const user = await this.userRepository.create({ email, password: hashedPassword });
         return user;
     };
@@ -26,7 +26,7 @@ export class UserService {
         const emailUser = await this.userRepository.findOneByFilter({ email });
         if (!emailUser) throw new Error('꺼져');
 
-        const isMatched = await compare(password, emailUser.password);
+        const isMatched = await HashUtil.comparePassword(password, emailUser.password);
         if (!isMatched) throw new Error('꺼져');
 
         const userId = emailUser.userId;
