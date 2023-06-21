@@ -8,6 +8,7 @@ import { sign } from 'jsonwebtoken';
 import { EnvService } from 'SRC/env/env.service';
 import { Env } from 'SRC/env/dataTypes/types/env.type';
 import { HashUtil } from 'COMMON/utils/hash.util';
+import { JwtUtil } from 'COMMON/utils/jwt.util';
 
 @Injectable()
 export class UserService {
@@ -30,7 +31,7 @@ export class UserService {
         if (!isMatched) throw new Error('꺼져');
 
         const userId = emailUser.userId;
-        const token = sign({ userId }, this.envService.get<string>(Env.JWT_KEY));
+        const token = JwtUtil.issueToken({ userId });
         return { token };
     };
 }
