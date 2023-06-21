@@ -9,6 +9,7 @@ export const enum ErrCode {
     PROXY_AUTHENTICATION_REQUIRED = '08',
     REQUEST_TIMEOUT = '09',
     CONFLICT = '10',
+    EMAIL_CONFLICT = '10-1',
     GONE = '11',
     LENGTH_REQUIRED = '12',
     PRECONDITION_FAILED = '13',
