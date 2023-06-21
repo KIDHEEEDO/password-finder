@@ -4,6 +4,7 @@ export const enum ErrCode {
     PAYMENT_REQUIRED = '03',
     FORBIDDEN = '04',
     NOT_FOUND = '05',
+    USER_NOT_FOUND = '05-1',
     METHOD_NOT_ALLOWED = '06',
     NOT_ACCEPTABLE = '07',
     PROXY_AUTHENTICATION_REQUIRED = '08',
